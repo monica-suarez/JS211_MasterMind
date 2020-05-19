@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const readline = require('readline');
+const clc = require("cli-color");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -10,8 +11,8 @@ const rl = readline.createInterface({
 let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-let correctLetters = 0;
-let correctLetterLocations = 0;
+
+
 
 
 const printBoard = () =>  {
@@ -32,15 +33,42 @@ const getRandomInt = (min, max) => {
 }
 
 const generateHint = (guess) =>  {
-  solutionArray = solution.split(' ');
-  guessArray = guess.split(' ')
+  let solutionArray = solution.split(' ');
+  let guessArray = guess.split(' ');
+  let correctLetterLocations = 0;
+  let correctLetters = 0;
+  for(let i=0; i<solutionArray.length; i++){
+    if(solutionArray[i] == guessArray[i]){
+      correctLetterLocations ++;
+      solutionArray[i] = null;
+    }
+  }
+  for (let i=0; i<solutionArray.length; i++){
+    let targetIndex = solutionArray.indexOf(guessArray[i]);
+    if(targetIndex > -1){
+      correctLetters++;
+      solutionArray[targetIndex] = null;
+    }
+  }
+  let hintStr = clc.red(correctLetterLocations.toString()) + "-" + clc.yellowBright(correctLetters.toString());
+  console.log(hintStr);
+
 }
 
+
 const mastermind = (guess) => {
-  solution = 'abcd'; // Comment this out to generate a random solution
+  // solution = 'abcd'; // Comment this out to generate a random solution
   // your code here
   if(guess == solution){
     return "You guessed it!"
+  }
+  let hint = generateHint(guess);
+  board.push(guess + " " + hint);
+  if(board.length > 10){
+    return `You ran out of turns! The solution was ${solution}`
+  }
+  else{
+    return "Guess again."
   }
 }
 
