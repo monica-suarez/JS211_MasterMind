@@ -10,6 +10,9 @@ const rl = readline.createInterface({
 let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+let correctLetters = 0;
+let correctLetterLocations = 0;
+
 
 const printBoard = () =>  {
   for (let i = 0; i < board.length; i++) {
@@ -28,13 +31,17 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const generateHint = () =>  {
-  // your code here
+const generateHint = (guess) =>  {
+  solutionArray = solution.split(' ');
+  guessArray = guess.split(' ')
 }
 
 const mastermind = (guess) => {
   solution = 'abcd'; // Comment this out to generate a random solution
   // your code here
+  if(guess == solution){
+    return "You guessed it!"
+  }
 }
 
 
