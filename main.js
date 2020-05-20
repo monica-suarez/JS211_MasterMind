@@ -38,7 +38,7 @@ const generateHint = (guess) =>  {
   let correctLetterLocations = 0;
   let correctLetters = 0;
   for(let i=0; i<solutionArray.length; i++){
-    if(solutionArray[i] == guessArray[i]){
+    if(solutionArray[i] === guessArray[i]){
       correctLetterLocations ++;
       solutionArray[i] = null;
     }
@@ -50,9 +50,7 @@ const generateHint = (guess) =>  {
       solutionArray[targetIndex] = null;
     }
   }
-  let hintStr = clc.red(correctLetterLocations.toString()) + "-" + clc.yellowBright(correctLetters.toString());
-  console.log(hintStr);
-
+  console.log(clc.red(correctLetterLocations.toString()) + "-" + clc.yellowBright(correctLetters.toString()));
 }
 
 
@@ -63,7 +61,7 @@ const mastermind = (guess) => {
     return "You guessed it!"
   }
   let hint = generateHint(guess);
-  board.push(guess + " " + hint);
+  board.push((guess + hint).toString());
   if(board.length > 10){
     return `You ran out of turns! The solution was ${solution}`
   }
