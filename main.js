@@ -13,8 +13,6 @@ let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 
-
-
 const printBoard = () =>  {
   for (let i = 0; i < board.length; i++) {
     console.log(board[i]);
@@ -33,8 +31,8 @@ const getRandomInt = (min, max) => {
 }
 
 const generateHint = (guess) =>  {
-  let solutionArray = solution.split(' ');
-  let guessArray = guess.split(' ');
+  let solutionArray = solution.split('');
+  let guessArray = guess.split('');
   let correctLetterLocations = 0;
   let correctLetters = 0;
   for(let i=0; i<solutionArray.length; i++){
@@ -51,28 +49,33 @@ const generateHint = (guess) =>  {
     }
   }
   console.log(clc.red(correctLetterLocations.toString()) + "-" + clc.yellowBright(correctLetters.toString()));
+  let hint = correctLetterLocations.toString() + "-" + correctLetters.toString();
+  return hint;
 }
 
 
 const mastermind = (guess) => {
-  // solution = 'abcd'; // Comment this out to generate a random solution
+  // solution = "abcd"; // Comment this out to generate a random solution
   // your code here
   if(guess == solution){
-    return "You guessed it!"
-  }
-  let hint = generateHint(guess);
-  board.push((guess + hint).toString());
-  if(board.length > 10){
-    return `You ran out of turns! The solution was ${solution}`
-  }
-  else{
-    return "Guess again."
+    console.log("You guessed it!");
+    return "You guessed it!";
+  }else{
+    let hint = generateHint(guess);
+    board.push(guess + " " + hint);
+    if(board.length > 10){
+      console.log(`You ran out of turns! The solution was ${solution}`)
+    }
+    else{
+      console.log("Guess again.");
+    }
   }
 }
 
 
 const getPrompt = () =>  {
   rl.question('guess: ', (guess) => {
+    // console.log("this is our" + " " + guess);
     mastermind(guess);
     printBoard();
     getPrompt();
